@@ -33,11 +33,29 @@ public class Language
 			BufferedReader bR = new BufferedReader(fL);
 			while( (line = bR.readLine()) != null )
 			{
-				String[] split = utils.StringUtils.splitString(":", line, true);
+				String[] splitLine = utils.StringUtils.splitString(":", line, true);
 				switch(split[0])
 				{
-					case "string":
-						langArray[16] = split[1];
+					case "menuFile":
+						langArray[100] = splitLine[1];
+						break;
+					case "menuEdit":
+						langArray[101] = splitLine[1];
+						break;
+					case "menuHelp":
+						langArray[102] = splitLine[1];
+						break;
+					case "buttonOk":
+						langArray[200] = splitLine[1];
+						break;
+					case "buttonCancle":
+						langArray[201] = splitLine[1];
+						break;
+					case "buttonYes":
+						langArray[202] = splitLine[1];
+						break;
+					case "buttonNo":
+						langArray[203] = splitLine[1];
 						break;
 					default:
 						break;
