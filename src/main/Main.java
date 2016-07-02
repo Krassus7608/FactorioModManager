@@ -6,7 +6,9 @@ import javafx.stage.Stage;
 
 public class Main extends Application
 {
-
+	public static final Configuration config = new Configuration();
+	public static final Language lang = new Language(Main.config.langFile);
+	
 	public static void main(String[] args)
 	{
 		Application.launch(args);
