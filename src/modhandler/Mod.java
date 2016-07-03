@@ -2,21 +2,27 @@ package modhandler;
 
 public class Mod
 {
-	/*
-	 * ToDo: Author, Beschreibung, etc...
-	 */
 	public final String name;
+	public final String url;
+	public final String author;
+	public final String title;
+	public final String description;
+	public final String hompage;
 	private boolean status;
-	
-	public Mod(String name, boolean status)
-	{
+
+	public Mod(String name, String url, String author, String title, String description, String hompage, boolean status) {
 		this.name = name;
+		this.url = url;
+		this.author = author;
+		this.title = title;
+		this.description = description;
+		this.hompage = hompage;
 		this.status = status;
 	}
-	
-	public Mod(String name)
+
+	public Mod(String name, String url, String author, String title, String description, String hompage)
 	{
-		this(name, false);
+		this(name, url, author, title, description, hompage, false);
 	}
 	
 	/*

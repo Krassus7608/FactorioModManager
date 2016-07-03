@@ -14,7 +14,7 @@ public class ModHandler
 	public ModHandler()
 	{
 		/*
-		 * Alle Mods aus %AppData%/Roaming/Factorio/mods/ erfassen und in modList speichern.
+		 * Alle Mods(zips) aus %AppData%/Roaming/Factorio/mods/ erfassen, info.json auslesen und in modList speichern.
 		 * Der Status der einzelnen Mods soll anfangs auf false gesetzt werden.
 		 */
 		
