@@ -1,11 +1,15 @@
 package modhandler;
 
+import java.io.*;
 import java.util.ArrayList;
+import org.json.simple.*;
+import org.json.simple.parser.*;
 
 public class ModHandler
 {
 	private ArrayList<Mod> modList;
 	private ArrayList<ModPack> modPacks;
+	private JSONParser parser;
 	
 	public ModHandler()
 	{
@@ -24,6 +28,7 @@ public class ModHandler
 		/*
 		 * Alle Mods aus modList in %AppData%/Roaming/Factorio/mods/mod-list.json schreiben (mit Name und Status).
 		 */
+		parser = new JSONParser();
 	}
 	
 	/*
@@ -43,6 +48,25 @@ public class ModHandler
 	{
 		//...
 		//this.addMod(m);
+	}
+
+	public void parseModJson() {
+		try {
+			Object obj = parser.parse(new FileReader("D:\\Projects\\FactorioModOrganizer\\mod.json"));
+			JSONObject jsonObject = (JSONObject) obj;
+
+			String title = (String) jsonObject.get("title");
+			System.out.println(title);
+		}
+		catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+		catch (ParseException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/*
