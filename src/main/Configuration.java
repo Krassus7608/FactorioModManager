@@ -56,7 +56,7 @@ public class Configuration
 		this.langFolder = this.path + "lang/";
 		this.langFile = new File(this.langFolder + this.confArray[0] + ".lang");
 		this.factorioBaseFolder = this.confArray[1];
-		
+		this.factorioAppFolder = this.getAppDataFolder() + "/Factorio";
 	}
 	
 	/*
@@ -160,4 +160,15 @@ public class Configuration
 	/*
 	 * Get AppData folder
 	 */
+	private String getAppDataFolder()
+	{
+		if (System.getProperty("os.name").startsWith("Windows"))
+		{
+		    return System.getenv("AppData");
+		}
+		else
+		{
+		    return System.getProperty("user.home");
+		}
+	}
 }

@@ -9,7 +9,7 @@ public class Main extends Application
 {
 	public static final Configuration config = new Configuration();
 	public static final Language lang = new Language(Main.config.langFile);
-	public static final ModHandler modHandler = new ModHandler();
+	//public static final ModHandler modHandler = new ModHandler();
 	
 	public static void main(String[] args)
 	{
@@ -19,6 +19,7 @@ public class Main extends Application
 	@Override
 	public void start(Stage primaryStage) throws Exception
 	{
-		new Gui(primaryStage);
+		System.out.println(Main.config.factorioAppFolder);
+		//new Gui(primaryStage);
 	}
 }
