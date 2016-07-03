@@ -39,6 +39,12 @@ public class ModHandler
 		this.modList.remove(m);
 	}
 	
+	public void getMod(String url)
+	{
+		//...
+		//this.addMod(m);
+	}
+	
 	/*
 	 * ModPack-Functions
 	 */
