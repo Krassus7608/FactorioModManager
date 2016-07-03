@@ -19,7 +19,6 @@ public class Main extends Application
 	@Override
 	public void start(Stage primaryStage) throws Exception
 	{
-		System.out.println(Main.config.factorioAppFolder);
-		//new Gui(primaryStage);
+		new Gui(primaryStage);
 	}
 }

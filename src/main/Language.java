@@ -12,6 +12,7 @@ public class Language
 	/*
 	 * Final attributes
 	 */
+	//MenutItems
 	public final String menuFile;
 	public final String menuFileOpen;
 	public final String menuFileExit;
@@ -22,6 +23,16 @@ public class Language
 	public final String menuEditSettings;
 	public final String menuHelp;
 	public final String menuHelpAbout;
+	
+	//Buttons
+	public final String buttonOk;
+	public final String buttonCancel;
+	public final String buttonYes;
+	public final String buttonNo;
+	
+	//TabPane
+	public final String modPackTab;
+	public final String modsTab;
 	
 	/*
 	 * Other attributes
@@ -51,6 +62,12 @@ public class Language
 		this.menuEditView = this.langArray[7];
 		this.menuEditSettings = this.langArray[8];
 		this.menuHelpAbout = this.langArray[9].replace("%name%",Configuration.name);;
+		this.buttonOk = this.langArray[100];
+		this.buttonCancel = this.langArray[101];
+		this.buttonYes = this.langArray[102];
+		this.buttonNo = this.langArray[103];
+		this.modPackTab = this.langArray[200];
+		this.modsTab = this.langArray[201];
 	}
 	
 	/*
@@ -76,6 +93,7 @@ public class Language
 						/*
 						 *    0-99: MenuItems
 						 * 100-199: Buttons
+						 * 200-201: TabPane
 						 */
 						case "menuFile":
 							langArray[0] = splitLine[1];
@@ -119,6 +137,12 @@ public class Language
 						case "buttonNo":
 							langArray[103] = splitLine[1];
 							break;
+						case "modPackTab":
+							langArray[200] = splitLine[1];
+							break;
+						case "modsTab":
+							langArray[201] = splitLine[1];
+							break;
 						default:
 							break;
 					}
@@ -158,6 +182,10 @@ public class Language
 		lArray[101] = "Cancel";
 		lArray[102] = "Yes";
 		lArray[103] = "No";
+		
+		//TabPane
+		lArray[200] = "Modpacks";
+		lArray[201] = "Mods";
 		
 		return lArray;
 	}
@@ -213,6 +241,12 @@ public class Language
 		bW.newLine();
 		
 		bW.write("buttonNo:No");
+		bW.newLine();
+		
+		bW.write("modPackTab:Modpacks");
+		bW.newLine();
+		
+		bW.write("modsTab:Mods");
 		bW.newLine();
 		
 		bW.close();

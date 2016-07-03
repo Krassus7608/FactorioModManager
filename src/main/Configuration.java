@@ -31,6 +31,7 @@ public class Configuration
 	
 	public final String factorioBaseFolder;
 	public final String factorioAppFolder;
+	public final String factorioModFolder;
 	
 	
 	/*
@@ -56,7 +57,8 @@ public class Configuration
 		this.langFolder = this.path + "lang/";
 		this.langFile = new File(this.langFolder + this.confArray[0] + ".lang");
 		this.factorioBaseFolder = this.confArray[1];
-		this.factorioAppFolder = this.getAppDataFolder() + "/Factorio";
+		this.factorioAppFolder = this.getAppDataFolder().replace('\\', '/') + "/Factorio";
+		this.factorioModFolder = this.factorioAppFolder + "/mods";
 	}
 	
 	/*
