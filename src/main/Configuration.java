@@ -156,4 +156,8 @@ public class Configuration
 		this.confArray[0] = "En_en";
 		this.confArray[1] = null;
 	}
+	
+	/*
+	 * Get AppData folder
+	 */
 }
