@@ -19,16 +19,16 @@ public class Language
 	/*
 	 * Other attributes
 	 */
+	private static final int langItems = 1000;
 	private File langFile;
 	private String[] langArray;
-	private final int langItems = 1000;
 	
 	public Language(File langFile)
 	{
 		this.langFile = langFile;
 		
 		//prepare langArray
-		this.langArray = new String[this.langItems];
+		this.langArray = new String[Language.langItems];
 		
 		//Load langFile
 		this.loadLangFile();
@@ -104,7 +104,7 @@ public class Language
 	 */
 	private String[] defaultLang()
 	{
-		String[] lArray = new String[this.langItems];
+		String[] lArray = new String[Language.langItems];
 		
 		//MenuItems
 		lArray[0] = "File";
