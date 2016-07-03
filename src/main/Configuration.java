@@ -34,7 +34,7 @@ public class Configuration
 	/*
 	 * Other attributes
 	 */
-	private static int configItems = 1000;
+	private static final int configItems = 1000;
 	private File confFile;
 	private String[] confArray;
 	
