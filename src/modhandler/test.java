@@ -5,8 +5,16 @@ package modhandler;
  */
 public class test
 {
-	public test()
+
+    int i;
+
+    public test(int i) {
+        this.i = i;
+    }
+
+    public test()
 	{
 		System.out.println("Döner macht schöner...");
 	}
+
 }
