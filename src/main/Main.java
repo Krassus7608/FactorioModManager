@@ -19,5 +19,4 @@ public class Main extends Application
 	{
 		new Gui(primaryStage);
 	}
-
 }
