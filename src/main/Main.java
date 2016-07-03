@@ -20,6 +20,7 @@ public class Main extends Application
 	@Override
 	public void start(Stage primaryStage) throws Exception
 	{
+		new Gui(primaryStage);
 		System.out.println(Main.config.factorioAppFolder);
 		handler.parseModJson();
 		//new Gui(primaryStage);

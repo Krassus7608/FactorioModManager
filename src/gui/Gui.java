@@ -4,11 +4,15 @@ import javafx.scene.Scene;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
+import javafx.scene.control.TableView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import main.Configuration;
 import main.Main;
+import modhandler.Mod;
 
 public class Gui
 {
@@ -38,6 +42,12 @@ public class Gui
 	/*
 	 * ModPack-/Mod-List
 	 */
+	private HBox mainBox;
+	private TabPane modPackList;
+	private Tab modPackTab, modsTab;
+	private VBox modInfoBox;
+	private VBox modPackInfoBox;
+	private TableView<Mod> modInfoTable;
 	
 	/*
 	 * Description
@@ -87,9 +97,23 @@ public class Gui
 		this.helpMenu.getItems().addAll(this.helpMenuAbout);
 		this.menu.getMenus().addAll(this.fileMenu, this.editMenu, this.helpMenu);
 		//--------------------------//
+		
+		
+		//---------- ModPack-/Mod-List ----------//
+		this.mainBox = new HBox();
+		
+		this.modPackList = new TabPane();
+		this.modPackTab = new Tab(Main.lang.modPackTab);
+		this.modPackTab.setClosable(false);
+		this.modsTab = new Tab(Main.lang.modsTab);
+		this.modsTab.setClosable(false);
+		this.modPackList.getTabs().addAll(this.modPackTab, this.modsTab);
+		
+		this.mainBox.getChildren().addAll(this.modPackList);
+		//---------------------------------------//
 
 
-		this.root.getChildren().addAll(this.menu);
+		this.root.getChildren().addAll(this.menu, this.mainBox);
 		this.mainStage.setTitle(Configuration.name);
 		this.mainStage.getIcons().add(Configuration.icon);
 		this.mainStage.show();
