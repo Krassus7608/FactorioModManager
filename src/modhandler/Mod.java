@@ -20,9 +20,9 @@ public class Mod
 		this.status = status;
 	}
 
-	public Mod(String name, String url, String author, String title, String description, String hompage)
+	public Mod(String name, String url, String author, String title, String description, String homepage)
 	{
-		this(name, url, author, title, description, hompage, false);
+		this(name, url, author, title, description, homepage, false);
 	}
 	
 	/*
