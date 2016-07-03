@@ -20,7 +20,9 @@ public class Gui
 		this.root = new BorderPane();
 		this.scene = new Scene(this.root, 720,548);
 		this.mainStage.setScene(this.scene);
+		
 		this.mainStage.setTitle(Configuration.name);
-		//this.stage.getIcons().add(Configuration.windowIcon);
+		this.mainStage.getIcons().add(Configuration.taskIcon);
+		this.mainStage.show();
 	}
 }
