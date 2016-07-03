@@ -16,7 +16,7 @@ public class ModHandler
 		
 		/*
 		 * Alle ModPacks aus %AppData%/Roaming/Factorio/mods/modPacks.json erfassen,
-		 * prüfen, ob die Mods noch existieren (vlg mit modList). Falls ein oder mehrere Mod(s) nicht
+		 * prüfen, ob die Mods noch existieren (vgl. mit modList). Falls eine oder mehrere Mod(s) nicht
 		 * mehr vorhanden sind, soll das ModPack deaktiviert werden.
 		 * Der Status der Mods der aktiven ModPacks soll nun auf true gesetzt werden.
 		 */
