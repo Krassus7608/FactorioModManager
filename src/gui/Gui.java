@@ -4,7 +4,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import main.Configuration;
@@ -20,11 +20,18 @@ public class Gui
 	private VBox root;
 	
 	/*
+	 * AboutWindow
+	 */
+	private Stage aboutStage;
+	private Scene aboutScene;
+	private HBox aboutRoot;
+	
+	/*
 	 * MenuItems
 	 */
 	private MenuBar menu;
 	private Menu fileMenu, editMenu, helpMenu;
-	private MenuItem fileMenuLoad, fileMenuSave, fileMenuExit;
+	private MenuItem fileMenuOpen, fileMenuExit;
 	private MenuItem editMenuUndo, editMenuRedo, editMenuView, editMenuSettings;
 	private MenuItem helpMenuAbout;
 	
@@ -38,11 +45,22 @@ public class Gui
 	
 	public Gui(Stage mainStage)
 	{
-		//MainStage
+		//---------- MainStage ----------//
 		this.mainStage = mainStage;
 		this.root = new VBox();
 		this.scene = new Scene(this.root, 720,548);
 		this.mainStage.setScene(this.scene);
+		//-------------------------------//
+		
+		
+		//---------- AboutStage ----------//
+		this.aboutStage = new Stage();
+		this.aboutRoot = new HBox();
+		this.aboutScene = new Scene(this.aboutRoot);
+		this.aboutStage.setTitle(Main.lang.menuHelpAbout);
+		this.aboutStage.setScene(this.aboutScene);
+		this.aboutStage.getIcons().add(Configuration.icon);
+		//-------------------------------//
 		
 		
 		//---------- Menu ----------//
@@ -51,12 +69,10 @@ public class Gui
 		this.editMenu = new Menu(Main.lang.menuEdit);
 		this.helpMenu = new Menu(Main.lang.menuHelp);
 		
-		this.fileMenuLoad = new MenuItem(Main.lang.menuFileLoad);
-		this.fileMenuLoad.setOnAction(e -> { Gui.this.load(); });
-		this.fileMenuSave = new MenuItem(Main.lang.menuFileSave);
-		this.fileMenuLoad.setOnAction(e -> { Gui.this.save(); });
+		this.fileMenuOpen = new MenuItem(Main.lang.menuFileOpen);
+		this.fileMenuOpen.setOnAction(e -> { Gui.this.open(); });
 		this.fileMenuExit = new MenuItem(Main.lang.menuFileExit);
-		this.fileMenuLoad.setOnAction(e -> { Gui.this.exit(); });
+		this.fileMenuExit.setOnAction(e -> { Gui.this.exit(); });
 		
 		this.editMenuUndo = new MenuItem(Main.lang.menuEditUndo);
 		this.editMenuRedo = new MenuItem(Main.lang.menuEditRedo);
@@ -64,8 +80,9 @@ public class Gui
 		this.editMenuSettings = new MenuItem(Main.lang.menuEditSettings);
 		
 		this.helpMenuAbout = new MenuItem(Main.lang.menuHelpAbout);
+		this.helpMenuAbout.setOnAction(e -> { Gui.this.aboutStage.showAndWait(); });
 		
-		this.fileMenu.getItems().addAll(this.fileMenuLoad, this.fileMenuSave, this.fileMenuExit);
+		this.fileMenu.getItems().addAll(this.fileMenuOpen, this.fileMenuExit);
 		this.editMenu.getItems().addAll(this.editMenuUndo, this.editMenuRedo, this.editMenuView, this.editMenuSettings);
 		this.helpMenu.getItems().addAll(this.helpMenuAbout);
 		this.menu.getMenus().addAll(this.fileMenu, this.editMenu, this.helpMenu);
@@ -74,21 +91,16 @@ public class Gui
 
 		this.root.getChildren().addAll(this.menu);
 		this.mainStage.setTitle(Configuration.name);
-		//this.mainStage.getIcons().add(Configuration.taskIcon);
+		this.mainStage.getIcons().add(Configuration.icon);
 		this.mainStage.show();
 	}
 	
 	/*
-	 * Load-/Save-Dialogue
+	 * Open mod directory in Explorer
 	 */
-	private void load()
+	private void open()
 	{
-		//Main.modHandler.refresh();
-	}
-	
-	private void save()
-	{
-		//Main.modHandler.save();
+		
 	}
 	
 	/*

@@ -13,8 +13,7 @@ public class Language
 	 * Final attributes
 	 */
 	public final String menuFile;
-	public final String menuFileLoad;
-	public final String menuFileSave;
+	public final String menuFileOpen;
 	public final String menuFileExit;
 	public final String menuEdit;
 	public final String menuEditUndo;
@@ -45,14 +44,13 @@ public class Language
 		this.menuFile = this.langArray[0];
 		this.menuEdit = this.langArray[1];
 		this.menuHelp = this.langArray[2];
-		this.menuFileLoad = this.langArray[3];
-		this.menuFileSave = this.langArray[4];
-		this.menuFileExit = this.langArray[5];
-		this.menuEditUndo = this.langArray[6];
-		this.menuEditRedo = this.langArray[7];
-		this.menuEditView = this.langArray[8];
-		this.menuEditSettings = this.langArray[9];
-		this.menuHelpAbout = this.langArray[10];
+		this.menuFileOpen = this.langArray[3];
+		this.menuFileExit = this.langArray[4];
+		this.menuEditUndo = this.langArray[5];
+		this.menuEditRedo = this.langArray[6];
+		this.menuEditView = this.langArray[7];
+		this.menuEditSettings = this.langArray[8];
+		this.menuHelpAbout = this.langArray[9].replace("%name%",Configuration.name);;
 	}
 	
 	/*
@@ -88,29 +86,26 @@ public class Language
 						case "menuHelp":
 							langArray[2] = splitLine[1];
 							break;
-						case "menuFileLoad":
+						case "menuFileOpen":
 							langArray[3] = splitLine[1];
 							break;
-						case "menuFileSave":
+						case "menuFileExit":
 							langArray[4] = splitLine[1];
 							break;
-						case "menuFileExit":
+						case "menuEditUndo":
 							langArray[5] = splitLine[1];
 							break;
-						case "menuEditUndo":
+						case "menuEditRedo":
 							langArray[6] = splitLine[1];
 							break;
-						case "menuEditRedo":
+						case "menuEditView":
 							langArray[7] = splitLine[1];
 							break;
-						case "menuEditView":
+						case "menuEditSettings":
 							langArray[8] = splitLine[1];
 							break;
-						case "menuEditSettings":
-							langArray[9] = splitLine[1];
-							break;
 						case "menuHelpAbout":
-							langArray[10] = splitLine[1].replace("%name%",Configuration.name);
+							langArray[9] = splitLine[1];
 							break;
 						case "buttonOk":
 							langArray[100] = splitLine[1];
@@ -150,14 +145,13 @@ public class Language
 		lArray[0] = "File";
 		lArray[1] = "Edit";
 		lArray[2] = "Help";
-		lArray[3] = "Load from...";
-		lArray[4] = "Save to...";
-		lArray[5] = "Exit";
-		lArray[6] = "Undo";
-		lArray[7] = "Redo";
-		lArray[8] = "Appearance";
-		lArray[9] = "Settings";
-		lArray[10] = "About %name%";
+		lArray[3] = "Open mod directory";
+		lArray[4] = "Exit";
+		lArray[5] = "Undo";
+		lArray[6] = "Redo";
+		lArray[7] = "Appearance";
+		lArray[8] = "Settings";
+		lArray[9] = "About %name%";
 		
 		//Buttons
 		lArray[100] = "Ok";
@@ -179,7 +173,46 @@ public class Language
 		FileWriter fW = new FileWriter(this.langFile);
 		BufferedWriter bW = new BufferedWriter(fW);
 		
-		bW.write("lang=EN_en");
+		bW.write("menuFile:File");
+		bW.newLine();
+		
+		bW.write("menuEdit:Edit");
+		bW.newLine();
+		
+		bW.write("menuHelp:Help");
+		bW.newLine();
+		
+		bW.write("menuFileOpen:Open mod directory");
+		bW.newLine();
+		
+		bW.write("menuFileExit:Exit");
+		bW.newLine();
+		
+		bW.write("menuEditUndo:Undo");
+		bW.newLine();
+		
+		bW.write("menuEditRedo:Redo");
+		bW.newLine();
+		
+		bW.write("menuEditView:Appearance");
+		bW.newLine();
+		
+		bW.write("menuEditSettings:Settings");
+		bW.newLine();
+		
+		bW.write("menuViewAbout:About %name%");
+		bW.newLine();
+		
+		bW.write("buttonOk:Ok");
+		bW.newLine();
+		
+		bW.write("buttonCancel:Cancel");
+		bW.newLine();
+		
+		bW.write("buttonYes:Yes");
+		bW.newLine();
+		
+		bW.write("buttonNo:No");
 		bW.newLine();
 		
 		bW.close();

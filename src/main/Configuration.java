@@ -16,8 +16,7 @@ public class Configuration
 	 * Static attributes
 	 */
 	public static final String name = "FactorioModOrganizer";
-	//public static final Image windowIcon = new Image(Configuration.class.getResourceAsStream("windowIcon.png"));
-	//public static final Image taskIcon = new Image(Configuration.class.getResourceAsStream("taskIcon.png"));
+	public static final Image icon = new Image(Configuration.class.getResourceAsStream("factorio.png"));
 	
 	
 	/*
@@ -137,8 +136,8 @@ public class Configuration
 		bW.write("lang=EN_en");
 		bW.newLine();
 		
-		bW.write("factorioDir=");
-		bW.newLine();
+		/*bW.write("factorioDir=");
+		bW.newLine();*/
 		
 		bW.close();
 		fW.close();
