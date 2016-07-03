@@ -29,6 +29,9 @@ public class Configuration
 	public final String langFolder;
 	public final File langFile;
 	
+	public final String factorioBaseFolder;
+	public final String factorioAppFolder;
+	
 	
 	/*
 	 * Other attributes
@@ -52,6 +55,8 @@ public class Configuration
 		//set final attributes
 		this.langFolder = this.path + "lang/";
 		this.langFile = new File(this.langFolder + this.confArray[0] + ".lang");
+		this.factorioBaseFolder = this.confArray[1];
+		
 	}
 	
 	/*
