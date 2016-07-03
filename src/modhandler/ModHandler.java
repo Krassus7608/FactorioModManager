@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import org.json.simple.*;
 import org.json.simple.parser.*;
 
-import jdk.nashorn.internal.parser.JSONParser;
-
 public class ModHandler
 {
 	private ArrayList<Mod> modList;
