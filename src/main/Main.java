@@ -22,7 +22,6 @@ public class Main extends Application
 	{
 		new Gui(primaryStage);
 		System.out.println(Main.config.factorioAppFolder);
-		handler.parseModJson();
-		//new Gui(primaryStage);
+		//handler.parseModJson();
 	}
 }

@@ -1,6 +1,9 @@
 package gui;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.Scene;
+import javafx.scene.control.ListView;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -8,11 +11,13 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import main.Configuration;
 import main.Main;
 import modhandler.Mod;
+import modhandler.ModPack;
 
 public class Gui
 {
@@ -45,9 +50,12 @@ public class Gui
 	private HBox mainBox;
 	private TabPane modPackList;
 	private Tab modPackTab, modsTab;
-	private VBox modInfoBox;
-	private VBox modPackInfoBox;
-	private TableView<Mod> modInfoTable;
+	private Pane infoBox;
+	private VBox modsInfoBox;
+	private VBox modPackBox, modPackInfoBox;
+	private TableView<Mod> modPackModsTable;
+	private ListView<Mod> modsTabList;
+	private ListView<ModPack> modPackTabList;
 	
 	/*
 	 * Description
@@ -101,15 +109,43 @@ public class Gui
 		
 		//---------- ModPack-/Mod-List ----------//
 		this.mainBox = new HBox();
+		this.infoBox = new Pane();
 		
 		this.modPackList = new TabPane();
+		this.modPackList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>()
+		{
+			        @Override
+			        public void changed(ObservableValue<? extends Tab> ov, Tab oldTab, Tab newTab)
+			        {
+			        	if(newTab.getText().equals(Gui.this.modPackTab.getText())){ Gui.this.showModPackInfoBox(); }
+			        	else{ Gui.this.showModsInfoBox(); }
+			        }
+		});
+		
 		this.modPackTab = new Tab(Main.lang.modPackTab);
 		this.modPackTab.setClosable(false);
+		this.modPackTabList = new ListView<>();
+		//this.modPackTabList.setItems();
+		this.modPackTab.setContent(this.modPackTabList);
+		
 		this.modsTab = new Tab(Main.lang.modsTab);
 		this.modsTab.setClosable(false);
+		this.modsTabList = new ListView<>();
+		//this.modsTabList.setItems();
+		this.modsTab.setContent(this.modsTabList);
+		
 		this.modPackList.getTabs().addAll(this.modPackTab, this.modsTab);
 		
-		this.mainBox.getChildren().addAll(this.modPackList);
+		this.modsInfoBox = new VBox();
+		this.modsInfoBox.getChildren().addAll();
+		
+		this.modPackBox = new VBox();
+		this.modPackInfoBox = new VBox();
+		this.modPackModsTable = new TableView<>();
+		this.modPackBox.getChildren().addAll(this.modPackInfoBox, this.modPackModsTable);
+		
+		this.infoBox.getChildren().add(this.modPackBox);
+		this.mainBox.getChildren().addAll(this.modPackList, this.infoBox);
 		//---------------------------------------//
 
 
@@ -125,6 +161,21 @@ public class Gui
 	private void open()
 	{
 		
+	}
+	
+	/*
+	 * 
+	 */
+	private void showModPackInfoBox()
+	{
+		this.infoBox.getChildren().clear();
+		this.infoBox.getChildren().add(this.modPackBox);
+	}
+	
+	private void showModsInfoBox()
+	{
+		this.infoBox.getChildren().clear();
+		this.infoBox.getChildren().add(this.modsInfoBox);
 	}
 	
 	/*
