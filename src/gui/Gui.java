@@ -2,7 +2,10 @@ package gui;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
@@ -13,6 +16,9 @@ import javafx.scene.control.TableView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
+import javafx.scene.shape.StrokeLineCap;
 import javafx.stage.Stage;
 import main.Configuration;
 import main.Main;
@@ -109,9 +115,13 @@ public class Gui
 		
 		//---------- ModPack-/Mod-List ----------//
 		this.mainBox = new HBox();
+		this.mainBox.minHeightProperty().bind(this.mainStage.heightProperty());
+
 		this.infoBox = new Pane();
+		this.infoBox.prefWidthProperty().bind(this.mainBox.widthProperty().divide(3).multiply(2));
 		
 		this.modPackList = new TabPane();
+		this.modPackList.prefWidthProperty().bind(this.mainBox.widthProperty().divide(3));
 		this.modPackList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>()
 		{
 			        @Override
@@ -125,27 +135,49 @@ public class Gui
 		this.modPackTab = new Tab(Main.lang.modPackTab);
 		this.modPackTab.setClosable(false);
 		this.modPackTabList = new ListView<>();
-		//this.modPackTabList.setItems();
+		this.modPackTabList.setItems(Main.modHandler.getModPacks());
 		this.modPackTab.setContent(this.modPackTabList);
 		
 		this.modsTab = new Tab(Main.lang.modsTab);
 		this.modsTab.setClosable(false);
 		this.modsTabList = new ListView<>();
-		//this.modsTabList.setItems();
+		this.modsTabList.setItems(Main.modHandler.getMods());
 		this.modsTab.setContent(this.modsTabList);
-		
 		this.modPackList.getTabs().addAll(this.modPackTab, this.modsTab);
 		
+		//ModInfo
 		this.modsInfoBox = new VBox();
-		this.modsInfoBox.getChildren().addAll();
+		this.modsInfoBox.prefWidthProperty().bind(this.infoBox.widthProperty());
+		this.modsInfoBox.prefHeightProperty().bind(this.infoBox.heightProperty());
+		this.modsInfoBox.getChildren().addAll(new Label("Test: 123BlaBla"));
 		
+		//ModPack Info
 		this.modPackBox = new VBox();
+		this.modPackBox.prefWidthProperty().bind(this.infoBox.widthProperty());
+		this.modPackBox.prefHeightProperty().bind(this.infoBox.heightProperty());
+		
 		this.modPackInfoBox = new VBox();
+		this.modPackInfoBox.prefWidthProperty().bind(this.modPackBox.widthProperty());
+		this.modPackInfoBox.prefHeightProperty().bind(this.modPackBox.heightProperty().divide(2));
+		this.modPackInfoBox.getChildren().addAll(new Label("Test: 12345"));
+		
 		this.modPackModsTable = new TableView<>();
+		this.modPackModsTable.prefWidthProperty().bind(this.modPackBox.widthProperty());
+		this.modPackModsTable.prefHeightProperty().bind(this.modPackBox.heightProperty().divide(2));
+		this.modPackModsTable.prefWidthProperty().bind(this.infoBox.widthProperty());
+		
 		this.modPackBox.getChildren().addAll(this.modPackInfoBox, this.modPackModsTable);
 		
 		this.infoBox.getChildren().add(this.modPackBox);
-		this.mainBox.getChildren().addAll(this.modPackList, this.infoBox);
+		Line splitter = new Line();
+		splitter.startXProperty().bind(this.modPackList.widthProperty());
+		splitter.setStartY(0.0);
+		splitter.endXProperty().bind(this.modPackList.widthProperty());
+		splitter.endYProperty().bind(this.mainStage.heightProperty());
+		splitter.setStrokeWidth(5);
+		splitter.setStroke(Color.GREY.deriveColor(0, 1, 1, 0.5));
+		splitter.setStrokeLineCap(StrokeLineCap.SQUARE);
+		this.mainBox.getChildren().addAll(this.modPackList, splitter, this.infoBox);
 		//---------------------------------------//
 
 
@@ -168,14 +200,20 @@ public class Gui
 	 */
 	private void showModPackInfoBox()
 	{
-		this.infoBox.getChildren().clear();
-		this.infoBox.getChildren().add(this.modPackBox);
+		if(this.infoBox != null && this.modPackBox != null)
+		{
+			this.infoBox.getChildren().clear();
+			this.infoBox.getChildren().add(this.modPackBox);
+		}
 	}
 	
 	private void showModsInfoBox()
 	{
-		this.infoBox.getChildren().clear();
-		this.infoBox.getChildren().add(this.modsInfoBox);
+		if(this.infoBox != null && this.modPackBox != null)
+		{
+			this.infoBox.getChildren().clear();
+			this.infoBox.getChildren().add(this.modsInfoBox);
+		}
 	}
 	
 	/*

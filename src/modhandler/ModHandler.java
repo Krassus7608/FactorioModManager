@@ -5,14 +5,21 @@ import java.util.ArrayList;
 import org.json.simple.*;
 import org.json.simple.parser.*;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 public class ModHandler
 {
-	private ArrayList<Mod> modList;
-	private ArrayList<ModPack> modPacks;
+	/*private ArrayList<Mod> modList;
+	private ArrayList<ModPack> modPacks;*/
+	private ObservableList<Mod> modList;
+	private ObservableList<ModPack> modPacks;
 	private JSONParser parser;
 	
 	public ModHandler()
 	{
+		this.modList = FXCollections.observableList(new ArrayList<Mod>());
+		this.modPacks = FXCollections.observableList(new ArrayList<ModPack>());
 		/*
 		 * Alle Mods(zips) aus %AppData%/Roaming/Factorio/mods/ erfassen, info.json auslesen und in modList speichern.
 		 * Der Status der einzelnen Mods soll anfangs auf false gesetzt werden.
@@ -50,6 +57,11 @@ public class ModHandler
 		//this.addMod(m);
 	}
 
+	/*
+	 * evtl in Konstruktor verschieben, da dort alle Vorbereitungen automatisch
+	 * erfolgen sollen, sodass nach der Initialisation die Mod und ModPack Listen
+	 * bereitstehen
+	 */
 	public void parseModJson() {
 		try {
 			Object obj = parser.parse(new FileReader("D:\\Projects\\FactorioModOrganizer\\mod.json"));
@@ -95,27 +107,13 @@ public class ModHandler
 	/*
 	 * Getter and Setter
 	 */
-	public Mod[] getMods()
+	public ObservableList<Mod> getMods()
 	{
-		Mod[] m = new Mod[this.modList.size()];
-		
-		for(int i = 0; i < m.length; i++)
-		{
-			m[i] = this.modList.get(i);
-		}
-		
-		return m;
+		return this.modList;
 	}
 	
-	public ModPack[] getModPacks()
+	public ObservableList<ModPack> getModPacks()
 	{
-		ModPack[] mP = new ModPack[this.modPacks.size()];
-		
-		for(int i = 0; i < mP.length; i++)
-		{
-			mP[i] = this.modPacks.get(i);
-		}
-		
-		return mP;
+		return this.modPacks;
 	}
 }
