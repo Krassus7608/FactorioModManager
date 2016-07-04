@@ -6,6 +6,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
@@ -20,6 +21,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.StrokeLineCap;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import main.Configuration;
 import main.Main;
 import modhandler.Mod;
@@ -142,6 +144,18 @@ public class Gui
 		this.modsTab.setClosable(false);
 		this.modsTabList = new ListView<>();
 		this.modsTabList.setItems(Main.modHandler.getMods());
+		this.modsTabList.setCellFactory(new Callback<ListView<Mod>, ListCell<Mod>>(){
+            @Override
+            public ListCell<Mod> call(ListView<Mod> p){
+                ListCell<Mod> cell = new ListCell<Mod>(){
+                    @Override
+                    protected void updateItem(Mod t, boolean bln) {
+                        super.updateItem(t, bln);
+                        if (t != null){ setText(t.name); }
+                    }
+                };
+                return cell;
+        }});
 		this.modsTab.setContent(this.modsTabList);
 		this.modPackList.getTabs().addAll(this.modPackTab, this.modsTab);
 		
