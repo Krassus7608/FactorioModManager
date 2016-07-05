@@ -1,9 +1,11 @@
 package gui;
 
+import java.awt.Desktop;
+import java.io.File;
+import java.io.IOException;
+
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
@@ -98,7 +100,7 @@ public class Gui
 		this.fileMenuOpen = new MenuItem(Main.lang.menuFileOpen);
 		this.fileMenuOpen.setOnAction(e -> { Gui.this.open(); });
 		this.fileMenuExit = new MenuItem(Main.lang.menuFileExit);
-		this.fileMenuExit.setOnAction(e -> { Gui.this.exit(); });
+		this.fileMenuExit.setOnAction(e -> { Main.exit(Gui.this); });
 		
 		this.editMenuUndo = new MenuItem(Main.lang.menuEditUndo);
 		this.editMenuRedo = new MenuItem(Main.lang.menuEditRedo);
@@ -206,7 +208,17 @@ public class Gui
 	 */
 	private void open()
 	{
-		
+		try
+		{
+			Desktop.getDesktop().open(new File(Main.config.factorioModFolder + "xyz"));
+		}
+		catch (IOException | IllegalArgumentException e)
+		{
+			/*
+			 * Log event
+			 */
+			utils.Error.popUpErrorDetailed(Main.lang.errorWindowTitle, Main.lang.failedToOpenDirMessage.replace("%dir%", Main.config.factorioModFolder + "xyz"), Main.lang.failedToOpenDirInfo.replace("%dir%", Main.config.factorioModFolder + "xyz"), e.getMessage(), x -> {});
+		}
 	}
 	
 	/*
@@ -231,10 +243,10 @@ public class Gui
 	}
 	
 	/*
-	 * Exit-Function
+	 * Close-Method
 	 */
-	private void exit()
+	public void close()
 	{
-		
+		this.mainStage.close();
 	}
 }

@@ -34,6 +34,17 @@ public class Language
 	public final String modPackTab;
 	public final String modsTab;
 	
+	//Window titles
+	public final String errorWindowTitle;
+	public final String warningWindowTitle;
+	public final String infoWindowTitle;
+	
+	//Error/Warning/Info messages
+	public final String failedToOpenDirMessage;
+	public final String failedToOpenDirInfo;
+	public final String failedToOpenFileMessage;
+	public final String failedToOpenFileInfo;
+	
 	/*
 	 * Other attributes
 	 */
@@ -68,6 +79,13 @@ public class Language
 		this.buttonNo = this.langArray[103];
 		this.modPackTab = this.langArray[200];
 		this.modsTab = this.langArray[201];
+		this.errorWindowTitle = this.langArray[202].replace("%name%", Configuration.name);
+		this.warningWindowTitle = this.langArray[203].replace("%name%", Configuration.name);;
+		this.infoWindowTitle = this.langArray[204].replace("%name%", Configuration.name);;
+		this.failedToOpenDirMessage = this.langArray[300];
+		this.failedToOpenDirInfo = this.langArray[301];
+		this.failedToOpenFileMessage = this.langArray[302];
+		this.failedToOpenFileInfo = this.langArray[303];
 	}
 	
 	/*
@@ -94,6 +112,8 @@ public class Language
 						 *    0-99: MenuItems
 						 * 100-199: Buttons
 						 * 200-201: TabPane
+						 * 202-299: Window titles
+						 * 300-399: Error/Warning/Info messages
 						 */
 						case "menuFile":
 							langArray[0] = splitLine[1];
@@ -143,6 +163,27 @@ public class Language
 						case "modsTab":
 							langArray[201] = splitLine[1];
 							break;
+						case "errorWindowTitle":
+							langArray[202] = splitLine[1];
+							break;
+						case "warningWindowTitle":
+							langArray[203] = splitLine[1];
+							break;
+						case "infoWindowTitle":
+							langArray[204] = splitLine[1];
+							break;
+						case "failedToOpenDirMessage":
+							langArray[300] = splitLine[1];
+							break;
+						case "failedToOpenDirInfo":
+							langArray[301] = splitLine[1];
+							break;
+						case "failedToOpenFileMessage":
+							langArray[302] = splitLine[1];
+							break;
+						case "failedToOpenFileInfo":
+							langArray[303] = splitLine[1];
+							break;
 						default:
 							break;
 					}
@@ -187,6 +228,17 @@ public class Language
 		lArray[200] = "Modpacks";
 		lArray[201] = "Mods";
 		
+		//Window titles
+		lArray[202] = "%name% - Error";
+		lArray[203] = "%name% - Warning";
+		lArray[204] = "%name% - Information";
+		
+		//Error/Warning/Info messages
+		lArray[300] = "Failed to open directory";
+		lArray[301] = "Could not open the directory '%dir%' due to the following error:";
+		lArray[302] = "Failed to open file";
+		lArray[303] = "Could not open the file '%file%' due to the following error:";
+		
 		return lArray;
 	}
 	
@@ -201,6 +253,7 @@ public class Language
 		FileWriter fW = new FileWriter(this.langFile);
 		BufferedWriter bW = new BufferedWriter(fW);
 		
+		//MenuItems
 		bW.write("menuFile:File");
 		bW.newLine();
 		
@@ -231,6 +284,7 @@ public class Language
 		bW.write("menuViewAbout:About %name%");
 		bW.newLine();
 		
+		//Buttons
 		bW.write("buttonOk:Ok");
 		bW.newLine();
 		
@@ -243,10 +297,34 @@ public class Language
 		bW.write("buttonNo:No");
 		bW.newLine();
 		
+		//TabPane
 		bW.write("modPackTab:Modpacks");
 		bW.newLine();
 		
 		bW.write("modsTab:Mods");
+		bW.newLine();
+		
+		//WindowTitles
+		bW.write("errorWindowTitle:%name% - Error");
+		bW.newLine();
+		
+		bW.write("warningWindowTitle:%name% - Warning");
+		bW.newLine();
+		
+		bW.write("infoWindowTitle:%name% - Information");
+		bW.newLine();
+		
+		//Error/Warning/Info messages
+		bW.write("failedToOpenDirMessage:Failed to open directory");
+		bW.newLine();
+		
+		bW.write("failedToOpenDirInfo:Could not open the directory '%dir%' due to the following error:");
+		bW.newLine();
+		
+		bW.write("failedToOpenFileMessage:Failed to open file");
+		bW.newLine();
+		
+		bW.write("failedToOpenFileInfo:Could not open the file '%file%' due to the following error:");
 		bW.newLine();
 		
 		bW.close();

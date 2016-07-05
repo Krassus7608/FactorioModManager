@@ -21,4 +21,14 @@ public class Main extends Application
 	{
 		new Gui(primaryStage);
 	}
+	
+	public static void exit(Gui g)
+	{
+		g.close();
+		/*
+		 * perform save actions
+		 */
+		//Main.config.storeConfig();
+		//Main.modHandler.storeMods();
+	}
 }
