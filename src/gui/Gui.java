@@ -149,14 +149,11 @@ public class Gui
 		
 		//---------- ModPack-/Mod-List ----------//
 		this.mainBox = new HBox();
-		this.mainBox.prefHeightProperty().bind(this.root.heightProperty().subtract(this.menu.heightProperty()));
-
-		this.infoBox = new Pane();
-		this.infoBox.prefWidthProperty().bind(this.mainBox.widthProperty().divide(3).multiply(2));
-		this.infoBox.prefHeightProperty().bind(this.mainBox.heightProperty());
+		this.infoBox = new Pane();		
+		this.infoBox.prefWidthProperty().bind(this.root.widthProperty().divide(3).multiply(2));
+		this.infoBox.prefHeightProperty().bind(this.root.heightProperty().subtract(this.menu.heightProperty()));
 		
 		this.modPackList = new TabPane();
-		this.modPackList.prefWidthProperty().bind(this.mainBox.widthProperty().divide(3));
 		this.modPackList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>()
 		{
 			        @Override
@@ -208,20 +205,22 @@ public class Gui
 			}
 		});
 		this.modsTab.setContent(this.modsTabList);
+		this.modPackList.prefWidthProperty().bind(this.root.widthProperty().divide(3));
+		this.modPackList.prefHeightProperty().bind(this.root.heightProperty().subtract(this.menu.heightProperty()));
 		this.modPackList.getTabs().addAll(this.modPackTab, this.modsTab);
 		//---------------------------------------//
 		
 		
 		//---------- ModPack-/Mod-InfoBox ----------//
+		//ModInfo
 		this.modsBox = new VBox();
 		this.modsBox.prefWidthProperty().bind(this.infoBox.widthProperty());
 		this.modsBox.prefHeightProperty().bind(this.infoBox.heightProperty());
 		
 		this.modsInfoBox = new VBox();
-		this.modsInfoBox.setPadding(new Insets(0,10,0,10));
 		this.modsInfoBox.prefWidthProperty().bind(this.modsBox.widthProperty());
-		this.modsInfoBox.prefHeightProperty().bind(this.modsBox.heightProperty().subtract(this.modsBox.heightProperty().divide(4)));
-		this.modsInfoBox.maxHeightProperty().bind(this.modsBox.heightProperty().subtract(this.modsBox.heightProperty().divide(4)));
+		this.modsInfoBox.prefHeightProperty().bind(this.modsBox.heightProperty().divide(4).multiply(3));
+		this.modsInfoBox.setPadding(new Insets(0,10,0,10));
 		this.modInfoID = new Label(Main.lang.modID + ": 1234");
 		this.modInfoID.setFont(Font.font("Lucida Sans Unicode", 13));
 		this.modInfoTitle = new Label(Main.lang.modTitle + ": TestMod");
@@ -268,47 +267,36 @@ public class Gui
 		this.modInfoDescription.setFont(Font.font("Lucida Sans Unicode", 13));
 		this.modInfoDescription.setEditable(false);
 		
+		this.modsInfoBox.getChildren().addAll(this.modInfoID, this.modInfoTitle, this.modInfoName, this.modInfoCategories, this.modInfoAuthorBox, this.modInfoContactBox, this.modInfoURLBox, this.modInfoHomepageBox, this.modInfoDescriptionLabel, this.modInfoDescription);
+		
 		this.modsReleaseTableBox = new VBox();
-		this.modsReleaseTableBox.setStyle("-fx-border-color: red;");
-		this.modsReleaseTableBox.setPadding(new Insets(10));
 		this.modsReleaseTableBox.prefWidthProperty().bind(this.modsBox.widthProperty());
 		this.modsReleaseTableBox.prefHeightProperty().bind(this.modsBox.heightProperty().divide(4));
+		this.modsReleaseTableBox.setPadding(new Insets(10));
 		
 		this.modsReleaseTable = new TableView<>();
-		/*this.modsReleaseTable.prefWidthProperty().bind(this.modsInfoBox.widthProperty());
-		this.modsReleaseTable.prefHeight(Double.MAX_VALUE);*/
 		
 		this.modsReleaseTableBox.getChildren().add(this.modsReleaseTable);
 		
-		this.modsInfoBox.getChildren().addAll(this.modInfoID, this.modInfoTitle, this.modInfoName, this.modInfoCategories, this.modInfoAuthorBox, this.modInfoContactBox, this.modInfoURLBox, this.modInfoHomepageBox, this.modInfoDescriptionLabel, this.modInfoDescription);
-		
 		this.modsBox.getChildren().addAll(this.modsInfoBox, this.modsReleaseTableBox);
 		
+		//Modpack-Info
 		this.modPackBox = new VBox();
-		this.modPackBox.prefWidthProperty().bind(this.infoBox.widthProperty());
-		this.modPackBox.prefHeightProperty().bind(this.infoBox.heightProperty());
 		
 		this.modPackInfoBox = new VBox();
-		this.modPackInfoBox.prefWidthProperty().bind(this.modPackBox.widthProperty());
-		this.modPackInfoBox.prefHeightProperty().bind(this.modPackBox.heightProperty().divide(2));
 		this.modPackInfoBox.getChildren().addAll();
 		
 		this.modPackModsTable = new TableView<>();
-		this.modPackModsTable.prefHeightProperty().bind(this.modPackBox.heightProperty().divide(2));
 		
 		this.modPackBox.getChildren().addAll(this.modPackInfoBox, this.modPackModsTable);
 		
 		
 		this.infoBox.getChildren().add(this.modPackBox);
 		Line splitter = new Line();
-		splitter.startXProperty().bind(this.modPackList.widthProperty());
-		splitter.setStartY(0.0);
-		splitter.endXProperty().bind(this.modPackList.widthProperty());
-		splitter.endYProperty().bind(this.modPackList.heightProperty());
 		splitter.setStrokeWidth(5);
 		splitter.setStroke(Color.GREY.deriveColor(0, 1, 1, 0.5));
 		splitter.setStrokeLineCap(StrokeLineCap.SQUARE);
-		this.mainBox.getChildren().addAll(this.modPackList, splitter, this.infoBox);
+		this.mainBox.getChildren().addAll(this.modPackList, this.infoBox);
 		//------------------------------------------//
 
 
