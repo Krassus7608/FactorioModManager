@@ -3,10 +3,14 @@ package gui;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 
 import javafx.application.HostServices;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -20,8 +24,11 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -193,7 +200,7 @@ public class Gui
 				Mod selected = Gui.this.modsTabList.getSelectionModel().getSelectedItem();
 				Gui.this.modInfoID.setText(Main.lang.modID + ": " + selected.ID);
 				Gui.this.modInfoURLLink.setText(selected.url);
-				Gui.this.modInfoCategories.setText(Main.lang.modCategories + selected.getCategories());
+				Gui.this.modInfoCategories.setText(Main.lang.modCategories + ": " + selected.getCategories());
 				Gui.this.modInfoAuthorLink.setText(selected.author);
 				Gui.this.modInfoContactLink.setText(selected.contact);
 				if(selected.contact.length() == 0){ Gui.this.modInfoContactLink.setDisable(true); }
@@ -202,6 +209,11 @@ public class Gui
 				Gui.this.modInfoHomepageLink.setText(selected.homepage);
 				if(selected.homepage.length() == 0){ Gui.this.modInfoHomepageLink.setDisable(true); }
 				Gui.this.modInfoDescription.setText(selected.description);
+				Gui.this.modsReleaseTable.setItems(FXCollections.observableArrayList(selected.releases));
+				for(int i = 0; i < selected.releases.length; i++)
+				{
+					System.out.println(selected.releases[i]);
+				}
 			}
 		});
 		this.modsTab.setContent(this.modsTabList);
@@ -275,6 +287,20 @@ public class Gui
 		this.modsReleaseTableBox.setPadding(new Insets(10));
 		
 		this.modsReleaseTable = new TableView<>();
+		TableColumn<ModRelease, String> mRID = new TableColumn<>(Main.lang.modID);
+		mRID.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ModRelease, String>, ObservableValue<String>>(){ public ObservableValue<String> call(TableColumn.CellDataFeatures<ModRelease, String> arg0) {if(arg0.getValue() != null){ return new SimpleStringProperty(Integer.toString(arg0.getValue().ID)); }else{ return new SimpleStringProperty("-1"); } } });
+		TableColumn<ModRelease, String> mRVersion = new TableColumn<>(Main.lang.modVersion);
+		mRVersion.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ModRelease, String>, ObservableValue<String>>(){ public ObservableValue<String> call(TableColumn.CellDataFeatures<ModRelease, String> arg0) {if(arg0.getValue() != null){ return new SimpleStringProperty(arg0.getValue().version); }else{ return new SimpleStringProperty("n/A"); } } });
+		TableColumn<ModRelease, String> mRDate = new TableColumn<>(Main.lang.otherDate);
+		mRDate.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ModRelease, String>, ObservableValue<String>>(){ public ObservableValue<String> call(TableColumn.CellDataFeatures<ModRelease, String> arg0) {if(arg0.getValue() != null){ return new SimpleStringProperty(arg0.getValue().release.toString()); }else{ return new SimpleStringProperty("n/A"); } } });
+		TableColumn<ModRelease, String> mRGameVersion = new TableColumn<>(Main.lang.modGameVersion);
+		mRGameVersion.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ModRelease, String>, ObservableValue<String>>(){ public ObservableValue<String> call(TableColumn.CellDataFeatures<ModRelease, String> arg0) {if(arg0.getValue() != null){ return new SimpleStringProperty(utils.StringUtils.arrToString(arg0.getValue().gameVersions, ",")); }else{ return new SimpleStringProperty("n/A"); } } });
+		TableColumn<ModRelease, String> mRDepend = new TableColumn<>(Main.lang.modDepend);
+		mRDepend.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ModRelease, String>, ObservableValue<String>>(){ public ObservableValue<String> call(TableColumn.CellDataFeatures<ModRelease, String> arg0) {if(arg0.getValue() != null){ return new SimpleStringProperty(utils.StringUtils.arrToString(arg0.getValue().dependencies, ",")); }else{ return new SimpleStringProperty("n/A"); } } });
+		TableColumn<ModRelease, String> mRFiles = new TableColumn<>(Main.lang.otherFiles);
+		mRFiles.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ModRelease, String>, ObservableValue<String>>(){ public ObservableValue<String> call(TableColumn.CellDataFeatures<ModRelease, String> arg0) {if(arg0.getValue() != null){ return new SimpleStringProperty(Integer.toString(arg0.getValue().files.length)); }else{ return new SimpleStringProperty("-1"); } } });
+        this.modsReleaseTable.getColumns().addAll(mRID,mRVersion,mRDate,mRGameVersion,mRDepend,mRFiles);
+        this.modsReleaseTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 		
 		this.modsReleaseTableBox.getChildren().add(this.modsReleaseTable);
 		

@@ -60,4 +60,18 @@ public class StringUtils
 		}
 		return splitedString;
 	}
+	
+	public static String arrToString(String[] str, String delimiter)
+	{
+		String s = "";
+		for(int i = 0; i < str.length; i++)
+		{
+			s += str[i];
+			if(i+1 < str.length)
+			{
+				s += delimiter + " ";
+			}
+		}
+		return s;
+	}
 }

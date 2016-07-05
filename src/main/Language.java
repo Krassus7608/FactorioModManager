@@ -55,6 +55,14 @@ public class Language
 	public final String modName;
 	public final String modDescription;
 	public final String modHomepage;
+	public final String modMirror;
+	public final String modVersion;
+	public final String modGameVersion;
+	public final String modDepend;
+	
+	//other
+	public final String otherDate;
+	public final String otherFiles;
 	
 	/*
 	 * Other attributes
@@ -106,6 +114,12 @@ public class Language
 		this.modName = this.langArray[406];
 		this.modDescription = this.langArray[407];
 		this.modHomepage = this.langArray[408];
+		this.modMirror = this.langArray[409];
+		this.modVersion = this.langArray[410];
+		this.modGameVersion = this.langArray[411];
+		this.modDepend = this.langArray[412];
+		this.otherDate = this.langArray[900];
+		this.otherFiles = this.langArray[901];
 	}
 	
 	/*
@@ -135,6 +149,7 @@ public class Language
 						 * 202-299: Window titles
 						 * 300-399: Error/Warning/Info messages
 						 * 400-499: ModInfoLabels
+						 * 900-999: Others
 						 */
 						case "menuFile":
 							langArray[0] = splitLine[1];
@@ -232,6 +247,24 @@ public class Language
 						case "modHomepage":
 							langArray[408] = splitLine[1];
 							break;
+						case "modMirror":
+							langArray[409] = splitLine[1];
+							break;
+						case "modVersion":
+							langArray[410] = splitLine[1];
+							break;
+						case "modGameVersion":
+							langArray[411] = splitLine[1];
+							break;
+						case "modDepend":
+							langArray[412] = splitLine[1];
+							break;
+						case "otherDate":
+							langArray[900] = splitLine[1];
+							break;
+						case "otherFiles":
+							langArray[901] = splitLine[1];
+							break;
 						default:
 							break;
 					}
@@ -297,6 +330,14 @@ public class Language
 		lArray[406] = "Name";
 		lArray[407] = "Description";
 		lArray[408] = "Homepage";
+		lArray[409] = "Download";
+		lArray[410] = "Mod version";
+		lArray[411] = "Game version";
+		lArray[412] = "Dependencies";
+		
+		//Others
+		lArray[900] = "Date";
+		lArray[901] = "Files";
 		
 		return lArray;
 	}
@@ -412,6 +453,25 @@ public class Language
 		bW.newLine();
 		
 		bW.write("modHomepage:Homepage");
+		bW.newLine();
+		
+		bW.write("modMirror:Download");
+		bW.newLine();
+		
+		bW.write("modVersion:Mod version");
+		bW.newLine();
+		
+		bW.write("modGameVersion:Game version");
+		bW.newLine();
+		
+		bW.write("modDepend:Dependencies");
+		bW.newLine();
+		
+		//Other
+		bW.write("otherDate:Date");
+		bW.newLine();
+		
+		bW.write("otherFiles:Files");
 		bW.newLine();
 		
 		bW.close();
