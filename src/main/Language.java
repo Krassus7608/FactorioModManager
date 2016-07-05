@@ -45,6 +45,17 @@ public class Language
 	public final String failedToOpenFileMessage;
 	public final String failedToOpenFileInfo;
 	
+	//ModInfoItems
+	public final String modID;
+	public final String modTitle;
+	public final String modURL;
+	public final String modCategories;
+	public final String modAuthor;
+	public final String modContact;
+	public final String modName;
+	public final String modDescription;
+	public final String modHomepage;
+	
 	/*
 	 * Other attributes
 	 */
@@ -86,6 +97,15 @@ public class Language
 		this.failedToOpenDirInfo = this.langArray[301];
 		this.failedToOpenFileMessage = this.langArray[302];
 		this.failedToOpenFileInfo = this.langArray[303];
+		this.modID = this.langArray[400];
+		this.modTitle = this.langArray[401];
+		this.modURL = this.langArray[402];
+		this.modCategories = this.langArray[403];
+		this.modAuthor = this.langArray[404];
+		this.modContact = this.langArray[405];
+		this.modName = this.langArray[406];
+		this.modDescription = this.langArray[407];
+		this.modHomepage = this.langArray[408];
 	}
 	
 	/*
@@ -114,6 +134,7 @@ public class Language
 						 * 200-201: TabPane
 						 * 202-299: Window titles
 						 * 300-399: Error/Warning/Info messages
+						 * 400-499: ModInfoLabels
 						 */
 						case "menuFile":
 							langArray[0] = splitLine[1];
@@ -184,6 +205,33 @@ public class Language
 						case "failedToOpenFileInfo":
 							langArray[303] = splitLine[1];
 							break;
+						case "modID":
+							langArray[400] = splitLine[1];
+							break;
+						case "modTitle":
+							langArray[401] = splitLine[1];
+							break;
+						case "modURL":
+							langArray[402] = splitLine[1];
+							break;
+						case "modCategories":
+							langArray[403] = splitLine[1];
+							break;
+						case "modAuthor":
+							langArray[404] = splitLine[1];
+							break;
+						case "modContact":
+							langArray[405] = splitLine[1];
+							break;
+						case "modName":
+							langArray[406] = splitLine[1];
+							break;
+						case "modDescription":
+							langArray[407] = splitLine[1];
+							break;
+						case "modHomepage":
+							langArray[408] = splitLine[1];
+							break;
 						default:
 							break;
 					}
@@ -238,6 +286,17 @@ public class Language
 		lArray[301] = "Could not open the directory '%dir%' due to the following error:";
 		lArray[302] = "Failed to open file";
 		lArray[303] = "Could not open the file '%file%' due to the following error:";
+		
+		//ModInfoLabels
+		lArray[400] = "Mod-ID";
+		lArray[401] = "Title";
+		lArray[402] = "URL";
+		lArray[403] = "Categories";
+		lArray[404] = "Author";
+		lArray[405] = "Contact";
+		lArray[406] = "Name";
+		lArray[407] = "Description";
+		lArray[408] = "Homepage";
 		
 		return lArray;
 	}
@@ -325,6 +384,34 @@ public class Language
 		bW.newLine();
 		
 		bW.write("failedToOpenFileInfo:Could not open the file '%file%' due to the following error:");
+		bW.newLine();
+		
+		//ModInfoLabels
+		bW.write("modID:Mod-ID");
+		bW.newLine();
+		
+		bW.write("modTitle:Title");
+		bW.newLine();
+		
+		bW.write("modURL:URL");
+		bW.newLine();
+		
+		bW.write("modCategories:Categories");
+		bW.newLine();
+		
+		bW.write("modAuthor:Author");
+		bW.newLine();
+		
+		bW.write("modContact:Contact");
+		bW.newLine();
+		
+		bW.write("modName:Name");
+		bW.newLine();
+		
+		bW.write("modDescription:Description");
+		bW.newLine();
+		
+		bW.write("modHomepage:Homepage");
 		bW.newLine();
 		
 		bW.close();

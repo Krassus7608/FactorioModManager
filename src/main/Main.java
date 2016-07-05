@@ -19,7 +19,7 @@ public class Main extends Application
 	@Override
 	public void start(Stage primaryStage) throws Exception
 	{
-		new Gui(primaryStage);
+		new Gui(primaryStage, getHostServices());
 	}
 	
 	public static void exit(Gui g)

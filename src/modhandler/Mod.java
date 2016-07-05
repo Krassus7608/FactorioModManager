@@ -48,4 +48,18 @@ public class Mod
 	{
 		this.status = s;
 	}
+	
+	public String getCategories()
+	{
+		String c = "";
+		for(int i = 0; i < this.categories.length; i++)
+		{
+			c += this.categories[i];
+			if(i+1 < this.categories.length)
+			{
+				c += ", ";
+			}
+		}
+		return c;
+	}
 }

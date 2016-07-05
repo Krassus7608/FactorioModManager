@@ -4,9 +4,14 @@ import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
 
+import javafx.application.HostServices;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -16,18 +21,22 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.StrokeLineCap;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import main.Configuration;
 import main.Main;
 import modhandler.Mod;
 import modhandler.ModPack;
+import modhandler.ModRelease;
 
 public class Gui
 {
@@ -37,6 +46,7 @@ public class Gui
 	private Stage mainStage;
 	private Scene scene;
 	private VBox root;
+	private HostServices hostServices;
 	
 	/*
 	 * AboutWindow
@@ -61,22 +71,42 @@ public class Gui
 	private TabPane modPackList;
 	private Tab modPackTab, modsTab;
 	private Pane infoBox;
-	private VBox modsInfoBox;
+	private VBox modsBox, modsInfoBox, modsReleaseTableBox;
+	private TableView<ModRelease> modsReleaseTable;
 	private VBox modPackBox, modPackInfoBox;
 	private TableView<Mod> modPackModsTable;
 	private ListView<Mod> modsTabList;
 	private ListView<ModPack> modPackTabList;
 	
 	/*
-	 * Description
+	 * Labels/TextAreas for ModPack-/Mod-InfoBoxes
 	 */
+	private Label modInfoID;
+	private HBox modInfoURLBox;
+	private Label modInfoURL;
+	private Hyperlink modInfoURLLink;
+	private Label modInfoCategories;
+	private HBox modInfoAuthorBox;
+	private Label modInfoAuthor;
+	private Hyperlink modInfoAuthorLink;
+	private HBox modInfoContactBox;
+	private Label modInfoContact;
+	private Hyperlink modInfoContactLink;
+	private Label modInfoTitle;
+	private Label modInfoName;
+	private Label modInfoDescriptionLabel;
+	private TextArea modInfoDescription;
+	private HBox modInfoHomepageBox;
+	private Label modInfoHomepage;
+	private Hyperlink modInfoHomepageLink;
 	
-	public Gui(Stage mainStage)
+	public Gui(Stage mainStage, HostServices hostServices)
 	{
 		//---------- MainStage ----------//
 		this.mainStage = mainStage;
+		this.hostServices = hostServices;
 		this.root = new VBox();
-		this.scene = new Scene(this.root, 720,548);
+		this.scene = new Scene(this.root, 720,587);
 		this.mainStage.setScene(this.scene);
 		//-------------------------------//
 		
@@ -119,10 +149,11 @@ public class Gui
 		
 		//---------- ModPack-/Mod-List ----------//
 		this.mainBox = new HBox();
-		this.mainBox.minHeightProperty().bind(this.mainStage.heightProperty());
+		this.mainBox.prefHeightProperty().bind(this.root.heightProperty().subtract(this.menu.heightProperty()));
 
 		this.infoBox = new Pane();
 		this.infoBox.prefWidthProperty().bind(this.mainBox.widthProperty().divide(3).multiply(2));
+		this.infoBox.prefHeightProperty().bind(this.mainBox.heightProperty());
 		
 		this.modPackList = new TabPane();
 		this.modPackList.prefWidthProperty().bind(this.mainBox.widthProperty().divide(3));
@@ -158,16 +189,101 @@ public class Gui
                 };
                 return cell;
         }});
+		this.modsTabList.setOnMouseClicked(new EventHandler<MouseEvent>(){
+			@Override
+			public void handle(MouseEvent mE)
+			{
+				Mod selected = Gui.this.modsTabList.getSelectionModel().getSelectedItem();
+				Gui.this.modInfoID.setText(Main.lang.modID + ": " + selected.ID);
+				Gui.this.modInfoURLLink.setText(selected.url);
+				Gui.this.modInfoCategories.setText(Main.lang.modCategories + selected.getCategories());
+				Gui.this.modInfoAuthorLink.setText(selected.author);
+				Gui.this.modInfoContactLink.setText(selected.contact);
+				if(selected.contact.length() == 0){ Gui.this.modInfoContactLink.setDisable(true); }
+				Gui.this.modInfoTitle.setText(Main.lang.modTitle + ": " + selected.title);
+				Gui.this.modInfoName.setText(Main.lang.modName + ": " + selected.name);
+				Gui.this.modInfoHomepageLink.setText(selected.homepage);
+				if(selected.homepage.length() == 0){ Gui.this.modInfoHomepageLink.setDisable(true); }
+				Gui.this.modInfoDescription.setText(selected.description);
+			}
+		});
 		this.modsTab.setContent(this.modsTabList);
 		this.modPackList.getTabs().addAll(this.modPackTab, this.modsTab);
+		//---------------------------------------//
 		
-		//ModInfo
+		
+		//---------- ModPack-/Mod-InfoBox ----------//
+		this.modsBox = new VBox();
+		this.modsBox.prefWidthProperty().bind(this.infoBox.widthProperty());
+		this.modsBox.prefHeightProperty().bind(this.infoBox.heightProperty());
+		
 		this.modsInfoBox = new VBox();
-		this.modsInfoBox.prefWidthProperty().bind(this.infoBox.widthProperty());
-		this.modsInfoBox.prefHeightProperty().bind(this.infoBox.heightProperty());
-		this.modsInfoBox.getChildren().addAll(new Label("Test: 123BlaBla"));
+		this.modsInfoBox.setPadding(new Insets(0,10,0,10));
+		this.modsInfoBox.prefWidthProperty().bind(this.modsBox.widthProperty());
+		this.modsInfoBox.prefHeightProperty().bind(this.modsBox.heightProperty().subtract(this.modsBox.heightProperty().divide(4)));
+		this.modsInfoBox.maxHeightProperty().bind(this.modsBox.heightProperty().subtract(this.modsBox.heightProperty().divide(4)));
+		this.modInfoID = new Label(Main.lang.modID + ": 1234");
+		this.modInfoID.setFont(Font.font("Lucida Sans Unicode", 13));
+		this.modInfoTitle = new Label(Main.lang.modTitle + ": TestMod");
+		this.modInfoTitle.setFont(Font.font("Lucida Sans Unicode", 13));
+		this.modInfoName = new Label(Main.lang.modName + ": test_mod");
+		this.modInfoName.setFont(Font.font("Lucida Sans Unicode", 13));
+		this.modInfoCategories = new Label(Main.lang.modCategories + ": gameplay, manufacturing, test, others");
+		this.modInfoCategories.setFont(Font.font("Lucida Sans Unicode", 13));
+		this.modInfoAuthorBox = new HBox();
+		this.modInfoAuthor = new Label(Main.lang.modAuthor + ": ");
+		this.modInfoAuthor.setFont(Font.font("Lucida Sans Unicode", 13));
+		this.modInfoAuthorLink = new Hyperlink("Krassus");
+		this.modInfoAuthorLink.setFont(Font.font("Lucida Sans Unicode", 13));
+		this.modInfoAuthorLink.setOnAction(e -> { Gui.this.hostServices.showDocument("http://www.factoriomods.com/authors/" + Gui.this.modInfoAuthorLink.getText()); });
+		this.modInfoAuthorBox.setAlignment(Pos.BASELINE_LEFT);
+		this.modInfoAuthorBox.getChildren().addAll(this.modInfoAuthor, this.modInfoAuthorLink);
+		this.modInfoContactBox = new HBox();
+		this.modInfoContact = new Label(Main.lang.modContact + ": ");
+		this.modInfoContact.setFont(Font.font("Lucida Sans Unicode", 13));
+		this.modInfoContactLink = new Hyperlink("keinen@contact.de");
+		this.modInfoContactLink.setFont(Font.font("Lucida Sans Unicode", 13));
+		this.modInfoContactLink.setOnAction(e -> { Gui.this.hostServices.showDocument(Gui.this.modInfoContactLink.getText()); });
+		this.modInfoContactBox.setAlignment(Pos.BASELINE_LEFT);
+		this.modInfoContactBox.getChildren().addAll(this.modInfoContact, this.modInfoContactLink);
+		this.modInfoURLBox = new HBox();
+		this.modInfoURL = new Label(Main.lang.modURL + ": ");
+		this.modInfoURL.setFont(Font.font("Lucida Sans Unicode", 13));
+		this.modInfoURLLink = new Hyperlink("http://www.factoriomods.com/mods/testmod");
+		this.modInfoURLLink.setFont(Font.font("Lucida Sans Unicode", 13));
+		this.modInfoURLLink.setOnAction(e -> { Gui.this.hostServices.showDocument(Gui.this.modInfoURLLink.getText()); });
+		this.modInfoURLBox.setAlignment(Pos.BASELINE_LEFT);
+		this.modInfoURLBox.getChildren().addAll(this.modInfoURL, this.modInfoURLLink);
+		this.modInfoHomepageBox = new HBox();
+		this.modInfoHomepage = new Label(Main.lang.modHomepage + ": ");
+		this.modInfoHomepage.setFont(Font.font("Lucida Sans Unicode", 13));
+		this.modInfoHomepageLink = new Hyperlink("https://www.testmod.com");
+		this.modInfoHomepageLink.setFont(Font.font("Lucida Sans Unicode", 13));
+		this.modInfoHomepageLink.setOnAction(e -> { Gui.this.hostServices.showDocument(Gui.this.modInfoHomepageLink.getText()); });
+		this.modInfoHomepageBox.setAlignment(Pos.BASELINE_LEFT);
+		this.modInfoHomepageBox.getChildren().addAll(this.modInfoHomepage, this.modInfoHomepageLink);
+		this.modInfoDescriptionLabel = new Label(Main.lang.modDescription + ":");
+		this.modInfoDescriptionLabel.setFont(Font.font("Lucida Sans Unicode", 13));
+		this.modInfoDescription = new TextArea("Hier steht die Beschreibung vom Testmod drin!");
+		this.modInfoDescription.setFont(Font.font("Lucida Sans Unicode", 13));
+		this.modInfoDescription.setEditable(false);
 		
-		//ModPack Info
+		this.modsReleaseTableBox = new VBox();
+		this.modsReleaseTableBox.setStyle("-fx-border-color: red;");
+		this.modsReleaseTableBox.setPadding(new Insets(10));
+		this.modsReleaseTableBox.prefWidthProperty().bind(this.modsBox.widthProperty());
+		this.modsReleaseTableBox.prefHeightProperty().bind(this.modsBox.heightProperty().divide(4));
+		
+		this.modsReleaseTable = new TableView<>();
+		/*this.modsReleaseTable.prefWidthProperty().bind(this.modsInfoBox.widthProperty());
+		this.modsReleaseTable.prefHeight(Double.MAX_VALUE);*/
+		
+		this.modsReleaseTableBox.getChildren().add(this.modsReleaseTable);
+		
+		this.modsInfoBox.getChildren().addAll(this.modInfoID, this.modInfoTitle, this.modInfoName, this.modInfoCategories, this.modInfoAuthorBox, this.modInfoContactBox, this.modInfoURLBox, this.modInfoHomepageBox, this.modInfoDescriptionLabel, this.modInfoDescription);
+		
+		this.modsBox.getChildren().addAll(this.modsInfoBox, this.modsReleaseTableBox);
+		
 		this.modPackBox = new VBox();
 		this.modPackBox.prefWidthProperty().bind(this.infoBox.widthProperty());
 		this.modPackBox.prefHeightProperty().bind(this.infoBox.heightProperty());
@@ -175,26 +291,25 @@ public class Gui
 		this.modPackInfoBox = new VBox();
 		this.modPackInfoBox.prefWidthProperty().bind(this.modPackBox.widthProperty());
 		this.modPackInfoBox.prefHeightProperty().bind(this.modPackBox.heightProperty().divide(2));
-		this.modPackInfoBox.getChildren().addAll(new Label("Test: 12345"));
+		this.modPackInfoBox.getChildren().addAll();
 		
 		this.modPackModsTable = new TableView<>();
-		this.modPackModsTable.prefWidthProperty().bind(this.modPackBox.widthProperty());
 		this.modPackModsTable.prefHeightProperty().bind(this.modPackBox.heightProperty().divide(2));
-		this.modPackModsTable.prefWidthProperty().bind(this.infoBox.widthProperty());
 		
 		this.modPackBox.getChildren().addAll(this.modPackInfoBox, this.modPackModsTable);
+		
 		
 		this.infoBox.getChildren().add(this.modPackBox);
 		Line splitter = new Line();
 		splitter.startXProperty().bind(this.modPackList.widthProperty());
 		splitter.setStartY(0.0);
 		splitter.endXProperty().bind(this.modPackList.widthProperty());
-		splitter.endYProperty().bind(this.mainStage.heightProperty());
+		splitter.endYProperty().bind(this.modPackList.heightProperty());
 		splitter.setStrokeWidth(5);
 		splitter.setStroke(Color.GREY.deriveColor(0, 1, 1, 0.5));
 		splitter.setStrokeLineCap(StrokeLineCap.SQUARE);
 		this.mainBox.getChildren().addAll(this.modPackList, splitter, this.infoBox);
-		//---------------------------------------//
+		//------------------------------------------//
 
 
 		this.root.getChildren().addAll(this.menu, this.mainBox);
@@ -235,10 +350,10 @@ public class Gui
 	
 	private void showModsInfoBox()
 	{
-		if(this.infoBox != null && this.modPackBox != null)
+		if(this.infoBox != null && this.modsBox != null)
 		{
 			this.infoBox.getChildren().clear();
-			this.infoBox.getChildren().add(this.modsInfoBox);
+			this.infoBox.getChildren().add(this.modsBox);
 		}
 	}
 	
