@@ -44,6 +44,16 @@ public class Language
 	public final String failedToOpenDirInfo;
 	public final String failedToOpenFileMessage;
 	public final String failedToOpenFileInfo;
+	public final String errorFTypeRegistrationMessage;
+	public final String errorFTypeRegistrationInfo;
+	public final String choseFileDownload;
+	public final String errorDownloadMessage;
+	public final String errorDownloadInfo;
+	public final String warningUriSchemeMessage;
+	public final String warningUriSchemeInfo;
+	public final String warningUriSchemeCancleInfo;
+	public final String warningUriSchemeFailedInfo;
+	public final String warningUriSchemeFailedDetail;
 	
 	//ModInfoItems
 	public final String modID;
@@ -59,10 +69,13 @@ public class Language
 	public final String modVersion;
 	public final String modGameVersion;
 	public final String modDepend;
+	public final String modRelease;
 	
 	//other
 	public final String otherDate;
 	public final String otherFiles;
+	public final String otherDownload;
+	public final String otherDownloadFromWebsite;
 	
 	/*
 	 * Other attributes
@@ -105,6 +118,16 @@ public class Language
 		this.failedToOpenDirInfo = this.langArray[301];
 		this.failedToOpenFileMessage = this.langArray[302];
 		this.failedToOpenFileInfo = this.langArray[303];
+		this.errorFTypeRegistrationMessage = this.langArray[304];
+		this.errorFTypeRegistrationInfo = this.langArray[305];
+		this.choseFileDownload = this.langArray[306];
+		this.errorDownloadMessage = this.langArray[307];
+		this.errorDownloadInfo = this.langArray[308];
+		this.warningUriSchemeMessage = this.langArray[309];
+		this.warningUriSchemeInfo = this.langArray[310];
+		this.warningUriSchemeCancleInfo = this.langArray[311];
+		this.warningUriSchemeFailedInfo = this.langArray[312];
+		this.warningUriSchemeFailedDetail = this.langArray[313].replace("%javaPath%", System.getProperty("java.home")).replace("%jarPath%", Configuration.jarPath);
 		this.modID = this.langArray[400];
 		this.modTitle = this.langArray[401];
 		this.modURL = this.langArray[402];
@@ -118,8 +141,11 @@ public class Language
 		this.modVersion = this.langArray[410];
 		this.modGameVersion = this.langArray[411];
 		this.modDepend = this.langArray[412];
+		this.modRelease = this.langArray[413];
 		this.otherDate = this.langArray[900];
 		this.otherFiles = this.langArray[901];
+		this.otherDownload = this.langArray[902];
+		this.otherDownloadFromWebsite = this.langArray[903];
 	}
 	
 	/*
@@ -220,6 +246,36 @@ public class Language
 						case "failedToOpenFileInfo":
 							langArray[303] = splitLine[1];
 							break;
+						case "errorFTypeRegistrationMessage":
+							langArray[304] = splitLine[1];
+							break;
+						case "errorFTypeRegistrationInfo":
+							langArray[305] = splitLine[1];
+							break;
+						case "choseFileDownload":
+							langArray[306] = splitLine[1];
+							break;
+						case "errorDownloadMessage":
+							langArray[307] = splitLine[1];
+							break;
+						case "errorDownloadInfo":
+							langArray[308] = splitLine[1];
+							break;
+						case "warningUriSchemeMessage":
+							langArray[309] = splitLine[1];
+							break;
+						case "warningUriSchemeInfo":
+							langArray[310] = splitLine[1];
+							break;
+						case "warningUriSchemeCancleInfo":
+							langArray[311] = splitLine[1];
+							break;
+						case "warningUriSchemeFailedInfo":
+							langArray[312] = splitLine[1];
+							break;
+						case "warningUriSchemeFailedDetail":
+							langArray[313] = splitLine[1];
+							break;
 						case "modID":
 							langArray[400] = splitLine[1];
 							break;
@@ -259,11 +315,20 @@ public class Language
 						case "modDepend":
 							langArray[412] = splitLine[1];
 							break;
+						case "modRelease":
+							langArray[413] = splitLine[1];
+							break;
 						case "otherDate":
 							langArray[900] = splitLine[1];
 							break;
 						case "otherFiles":
 							langArray[901] = splitLine[1];
+							break;
+						case "otherDownload":
+							langArray[902] = splitLine[1];
+							break;
+						case "otherDownloadFromWebsite":
+							langArray[903] = splitLine[1];
 							break;
 						default:
 							break;
@@ -319,6 +384,16 @@ public class Language
 		lArray[301] = "Could not open the directory '%dir%' due to the following error:";
 		lArray[302] = "Failed to open file";
 		lArray[303] = "Could not open the file '%file%' due to the following error:";
+		lArray[304] = "Failed to register custom URI-Scheme";
+		lArray[305] = "Could not register custom URI-Scheme due to the following error:";
+		lArray[306] = "Witch version of the mod you want to download?";
+		lArray[307] = "Downloaderror";
+		lArray[308] = "Failed to download file due to the following error:";
+		lArray[309] = "Unregistered URI-Scheme";
+		lArray[310] = "The URI-Scheme 'factoriomods://' is not registered on your system. If you want to install mods via the Website you need to register this URI-Scheme.\nDo you want to register it now?";
+		lArray[311] = "URI-Scheme is not registered. You will not be able to install mods directly from the website!";
+		lArray[312] = "Failed to register URI-Scheme due to an error.\nIf you want to try it manually please execute the following steps:";
+		lArray[313] = "Try to run the FactorioModOrganizer with administrator/root privileges.";
 		
 		//ModInfoLabels
 		lArray[400] = "Mod-ID";
@@ -334,10 +409,13 @@ public class Language
 		lArray[410] = "Mod version";
 		lArray[411] = "Game version";
 		lArray[412] = "Dependencies";
+		lArray[413] = "Release";
 		
 		//Others
 		lArray[900] = "Date";
 		lArray[901] = "Files";
+		lArray[902] = "Download";
+		lArray[903] = "Download from website";
 		
 		return lArray;
 	}
@@ -427,6 +505,36 @@ public class Language
 		bW.write("failedToOpenFileInfo:Could not open the file '%file%' due to the following error:");
 		bW.newLine();
 		
+		bW.write("errorFTypeRegistrationMessage:Failed to register custom URI-Scheme");
+		bW.newLine();
+		
+		bW.write("errorFTypeRegistrationInfo:Could not register custom URI-Scheme due to the following error:");
+		bW.newLine();
+		
+		bW.write("choseFileDownload:Witch version of the mod you want to download?");
+		bW.newLine();
+		
+		bW.write("errorDownloadMessage:Downloaderror");
+		bW.newLine();
+		
+		bW.write("errorDownloadInfo:Failed to download file due to the following error:");
+		bW.newLine();
+		
+		bW.write("warningUriSchemeMessage:Unregistered URI-Scheme");
+		bW.newLine();
+		
+		bW.write("warningUriSchemeInfo:The URI-Scheme 'factoriomods://' is not registered on your system. If you want to install mods via the Website you need to register this URI-Scheme.\nDo you want to register it now?");
+		bW.newLine();
+		
+		bW.write("warningUriSchemeCancleInfo:URI-Scheme is not registered. You will not be able to install mods directly from the website!");
+		bW.newLine();
+		
+		bW.write("warningUriSchemeFailedInfo:Failed to register URI-Scheme due to an error.\nIf you want to try it manually please execute the following steps:");
+		bW.newLine();
+		
+		bW.write("warningUriSchemeFailedDetail:Try to run the FactorioModOrganizer with administrator/root privileges.");
+		bW.newLine();
+		
 		//ModInfoLabels
 		bW.write("modID:Mod-ID");
 		bW.newLine();
@@ -467,11 +575,20 @@ public class Language
 		bW.write("modDepend:Dependencies");
 		bW.newLine();
 		
+		bW.write("modRelease:Release");
+		bW.newLine();
+		
 		//Other
 		bW.write("otherDate:Date");
 		bW.newLine();
 		
 		bW.write("otherFiles:Files");
+		bW.newLine();
+		
+		bW.write("otherDownload:Download");
+		bW.newLine();
+		
+		bW.write("otherDownloadFromWebsite:Download from website");
 		bW.newLine();
 		
 		bW.close();

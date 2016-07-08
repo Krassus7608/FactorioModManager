@@ -1,0 +1,5 @@
+URI-Scheme is not registered.
+Failed to register URI-Scheme: Dateityp "factoriomods" nicht gefunden, oder diesem Dateityp wurde kein �ffnen-Befehl
+zugeordnet.
+
+Failed to register URI-Scheme.

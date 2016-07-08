@@ -92,13 +92,42 @@ public class ModHandler
 				
 				JSONArray fJA = (JSONArray) jO.get("files");
 				ModFile[] mF = new ModFile[fJA.size()];
+				int newSize = fJA.size();
 				for(int j = 0; j < fJA.size(); j++)
 				{
 					JSONObject fJO = (JSONObject) fJA.get(j);
-					mF[j] = new ModFile( Math.toIntExact(((long)fJO.get("id"))), (String)fJO.get("name"), (String)fJO.get("mirror"), (String)fJO.get("url"));
-				} 
-				
-				mR[i] = new ModRelease(Math.toIntExact((long)jO.get("id")), (String)jO.get("version"), date, versions, dependencies, mF);
+					if((String)fJO.get("mirror") != null)
+					{
+						mF[j] = new ModFile( Math.toIntExact(((long)fJO.get("id"))), (String)fJO.get("name"), (String)fJO.get("mirror"), (String)fJO.get("url"));
+					}
+					else if((String)fJO.get("url") != null)
+					{
+						mF[j] = new ModFile( Math.toIntExact(((long)fJO.get("id"))), (String)fJO.get("name"), (String)fJO.get("url"), (String)fJO.get("url"));
+					}
+					else
+					{
+						mF[j] = null;
+						newSize--;
+					}
+				}
+				if(newSize != fJA.size())
+				{
+					ModFile[] mFNew = new ModFile[newSize];
+					int k = 0;
+					for(int j = 0; j < fJA.size(); j++)
+					{
+						if(mF[j] != null)
+						{
+							mFNew[k] = mF[j];
+							k++;
+						}
+					}
+					mR[i] = new ModRelease(Math.toIntExact((long)jO.get("id")), (String)jO.get("version"), date, versions, dependencies, mFNew);
+				}
+				else
+				{
+					mR[i] = new ModRelease(Math.toIntExact((long)jO.get("id")), (String)jO.get("version"), date, versions, dependencies, mF);
+				}
 			}
 			
 			return new Mod(Math.toIntExact((long) jsonObject.get("id")), (String) jsonObject.get("url"), categories, (String) jsonObject.get("author"), (String) jsonObject.get("contact"), (String) jsonObject.get("title"), (String) jsonObject.get("name"), (String) jsonObject.get("description"), (String) jsonObject.get("homepage"), mR);
@@ -116,6 +145,11 @@ public class ModHandler
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	public boolean downloadMod(String url)
+	{
+		return false;
 	}
 	
 	/*

@@ -3,10 +3,9 @@ package gui;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
-import java.util.Date;
+import java.net.MalformedURLException;
 
 import javafx.application.HostServices;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -25,10 +24,8 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -107,8 +104,11 @@ public class Gui
 	private Label modInfoHomepage;
 	private Hyperlink modInfoHomepageLink;
 	
+	private Downloader dl;
+	
+	@SuppressWarnings("unchecked")
 	public Gui(Stage mainStage, HostServices hostServices)
-	{
+	{	
 		//---------- MainStage ----------//
 		this.mainStage = mainStage;
 		this.hostServices = hostServices;
@@ -143,6 +143,7 @@ public class Gui
 		this.editMenuRedo = new MenuItem(Main.lang.menuEditRedo);
 		this.editMenuView = new MenuItem(Main.lang.menuEditView);
 		this.editMenuSettings = new MenuItem(Main.lang.menuEditSettings);
+		this.editMenuSettings.setOnAction(e -> { Gui.this.dl.download(); });
 		
 		this.helpMenuAbout = new MenuItem(Main.lang.menuHelpAbout);
 		this.helpMenuAbout.setOnAction(e -> { Gui.this.aboutStage.showAndWait(); });
@@ -210,10 +211,6 @@ public class Gui
 				if(selected.homepage.length() == 0){ Gui.this.modInfoHomepageLink.setDisable(true); }
 				Gui.this.modInfoDescription.setText(selected.description);
 				Gui.this.modsReleaseTable.setItems(FXCollections.observableArrayList(selected.releases));
-				for(int i = 0; i < selected.releases.length; i++)
-				{
-					System.out.println(selected.releases[i]);
-				}
 			}
 		});
 		this.modsTab.setContent(this.modsTabList);
@@ -377,5 +374,21 @@ public class Gui
 	public void close()
 	{
 		this.mainStage.close();
+	}
+	
+	/*
+	 * Download-GUI
+	 */
+	public static boolean dlGui(Mod m)
+	{
+		Stage stage = new Stage();
+		VBox root = new VBox();
+		root.setPadding(new Insets(10));
+		Scene scene = new Scene(root);
+		stage.setScene(scene);
+		Label header = new Label(Main.lang.choseFileDownload);
+		root.getChildren().add(header);
+		
+		return true;
 	}
 }

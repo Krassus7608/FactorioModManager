@@ -16,7 +16,9 @@ public class Configuration
 	 * Static attributes
 	 */
 	public static final String name = "FactorioModOrganizer";
+	public static final String jarPath = System.getProperty("java.class.path");
 	public static final Image icon = new Image(Configuration.class.getResourceAsStream("factorio.png"));
+	public static final String uriScheme = "factoriomods";
 	
 	
 	/*

@@ -10,18 +10,19 @@
 	"homepage":"",
 	"releases":[
 		{
-		"id":701,
-		"version":"0.3.0",
-		"released_at":"2016-07-03T00:00:00.000Z",
-		"game_versions":["0.12.x"],
-		"dependencies":[],
-		"files":[
-			{
-			"id":727,
-			"name":"",
-			"mirror":"http://s3.amazonaws.com/factoriomods/mod_files/attachments/000/000/727/original/Super_assembling_machine_0.3.0.zip?1467544438",
-			"url":null
-				}
+			"id":701,
+			"version":"0.3.0",
+			"released_at":"2016-07-03T00:00:00.000Z",
+			"game_versions":["0.12.x"],
+			"dependencies":[],
+			"files":
+			[
+				{
+				"id":727,
+				"name":"",
+				"mirror":"http://s3.amazonaws.com/factoriomods/mod_files/attachments/000/000/727/original/Super_assembling_machine_0.3.0.zip?1467544438",
+				"url":null
+					}
 			]
 		},
 		{

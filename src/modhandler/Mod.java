@@ -62,4 +62,27 @@ public class Mod
 		}
 		return c;
 	}
+	
+	@Override
+	public String toString()
+	{
+		String str = this.ID + ":\n[\n\t";
+		str += "URL: " + url + "\n\t";
+		str += "Categories: ";
+		for(int i = 0; i < categories.length; i++)
+		{
+			str += categories[i];
+			if(i+1 < categories.length)
+			{
+				str += ", ";
+			}
+		}
+		str += "Author: " + author + "\n\t";
+		str += "Contact: " + contact + "\n\t";
+		str += "Title: " + title + "\n\t";
+		str += "Name: " + name + "\n\t";
+		str += "Description: " + description + "\n\t";
+		str += "Homepage: " + homepage + "\n]";
+		return str;
+	}
 }
